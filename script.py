@@ -112,12 +112,6 @@ def generate_image(prompt: str, prefix: str, note_id: int) -> str:
         )
         img = out.images[0]
         img.save(filename)
-        gray = img.convert("L")
-        arr = np.array(gray)
-        if arr.mean() < 5:
-            logging.warning(f"Blank image (mean {arr.mean():.2f}); retrying...")
-            os.remove(filename)
-            continue
         logging.info(f"Valid image saved '{filename}'")
         return filename
     raise RuntimeError(
